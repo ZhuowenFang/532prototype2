@@ -30,7 +30,11 @@ public class GunManager : MonoBehaviour
     }
 
     public void AddGun()
-    {
+    {   
+        if (spawnedGuns >= gunPositions.Count)
+        {
+            return;
+        }
         spawnedGuns = Mathf.Min(gunPositions.Count - 1, spawnedGuns);
         var pos = gunPositions[spawnedGuns];
 

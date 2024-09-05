@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI waveText;
     [SerializeField] TextMeshProUGUI timeText;
+    public GameObject nextWavePanel;
+    public int damage = 25;
+    public Button nextWaveButton;
     [SerializeField] List<float> spawnTimes = new List<float>() { 1.5f, 1f, 0.05f };
 
     public static WaveManager instance;
@@ -29,15 +34,17 @@ public class WaveManager : MonoBehaviour
     {   
         waveText.text = "Wave: 1";
         timeText.text = "30";
+        nextWavePanel.SetActive(false);
+        nextWaveButton.onClick.AddListener(StartNewWave);
         StartNewWave();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !waveRunning)
-        {
-            StartNewWave();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space) && !waveRunning)
+        // {
+        //     StartNewWave();
+        // }
 
     }
 
@@ -47,8 +54,10 @@ public class WaveManager : MonoBehaviour
     }
 
     private void StartNewWave()
-    {
+    {   
+        Time.timeScale = 1;
         StopAllCoroutines();
+        nextWavePanel.SetActive(false);
         Player.instance.ResetPlayer();
         timeText.color = Color.white;
         timeText.text = "30";
@@ -92,5 +101,9 @@ public class WaveManager : MonoBehaviour
         timeText.color = Color.green;
         currentWaveTime = 0;
         EnemyManager.instance.RemoveEnemies();
+        nextWavePanel.SetActive(true);
+        Time.timeScale = 0;
+        damage += 10;
+
     }
 }

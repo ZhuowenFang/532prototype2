@@ -7,13 +7,13 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject muzzle;
     [SerializeField] Transform muzzlePosition;
     [SerializeField] GameObject projectile;
-
+    [SerializeField] AudioClip shootSound;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float fireDistance = 10f;
 
+    private AudioSource audioSource;
     Transform player;
     Vector2 offset;
-
     private float timeSinceLastFire = 0f;
     Transform closestEnemy;
     Animator anim;
@@ -23,6 +23,7 @@ public class Gun : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timeSinceLastFire = fireRate;
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     private void Update()
@@ -49,7 +50,9 @@ public class Gun : MonoBehaviour
             }
         }
     }
-    void AimAtEnemy(){
+
+    void AimAtEnemy()
+    {
         if (closestEnemy != null)
         {
             Vector3 direction = closestEnemy.position - transform.position;
@@ -59,12 +62,14 @@ public class Gun : MonoBehaviour
             transform.position = (Vector2)player.position + offset;
         }
     }
+
     public void SetOffset(Vector2 offset)
     {
         this.offset = offset;
     }
 
-    void Shooting(){
+    void Shooting()
+    {
         if (closestEnemy != null)
         {
             timeSinceLastFire += Time.deltaTime;
@@ -73,19 +78,21 @@ public class Gun : MonoBehaviour
                 Shoot();
                 timeSinceLastFire = 0;
             }
-        } else
-        {
-            return;
         }
     }
 
-    void Shoot() {
-        Debug.Log("Shoot");
+    void Shoot()
+    {
         var muzzleGo = Instantiate(muzzle, muzzlePosition.position, transform.rotation);
         muzzleGo.transform.SetParent(transform);
         Destroy(muzzleGo, 0.1f);
 
         var projectileGo = Instantiate(projectile, muzzlePosition.position, transform.rotation);
         Destroy(projectileGo, 3f);
+
+        if (shootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
     }
 }

@@ -112,8 +112,8 @@ public class Player : MonoBehaviour
     
     public void ResetPlayer()
     {
-        //currentHealth = maxHealth;
-        //healthText.text = currentHealth.ToString();
+        currentHealth = maxHealth;
+        healthText.text = currentHealth.ToString();
         isDead = false;
     }
 
