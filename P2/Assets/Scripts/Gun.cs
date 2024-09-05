@@ -23,7 +23,6 @@ public class Gun : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timeSinceLastFire = fireRate;
         anim = GetComponent<Animator>();
-        SetOffset(new Vector2(1, 0.5f));
     }
 
     private void Update()

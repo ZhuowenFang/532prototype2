@@ -163,6 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 6774167029193133188, guid: 4a42389b09c93da429970cec6a93bb67, type: 3}
   muzzlePosition: {fileID: 8316810800479817386}
-  projectile: {fileID: 0}
+  projectile: {fileID: 6884919878693465863, guid: 874baec5eee696144985d36f7689b682, type: 3}
   fireRate: 0.5
   fireDistance: 10

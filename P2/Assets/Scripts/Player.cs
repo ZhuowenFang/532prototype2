@@ -17,12 +17,16 @@ public class Player : MonoBehaviour
     Animator anim;
 
     bool isDead = false;
+    bool firstDeath = true;
+
     float moveHorizontal;
     float moveVertical;
     Vector2 movement;
     int facingDirection = 1;
 
     public static Player instance;
+
+    public GameObject FirstDiePanel;
 
     private void Awake()
     {
@@ -46,10 +50,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        if (currentHealth > 0)
+        {
+            isDead = false;
+        }
+
         if(isDead)
         {
-            movement = Vector2.zero;
-            anim.SetFloat("Velocity", 0);
+            //movement = Vector2.zero;
+            //anim.SetFloat("Velocity", 0);
             return;
 
         }
@@ -103,15 +112,23 @@ public class Player : MonoBehaviour
     
     public void ResetPlayer()
     {
-        currentHealth = maxHealth;
-        healthText.text = currentHealth.ToString();
+        //currentHealth = maxHealth;
+        //healthText.text = currentHealth.ToString();
         isDead = false;
     }
 
     public void Die()
     {
         isDead = true;
-        Debug.Log("You are dead");
+        Time.timeScale = 0; //暂停游戏
+        if (firstDeath)
+        {
+            FirstDiePanel.SetActive(true);
+        } else
+        {
+
+        }
+        firstDeath = false;
     }
 
 }
